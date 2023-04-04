@@ -10,11 +10,13 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddDbContext<TaskDbContext>();
-        serviceCollection.AddTransient<AddTaskViewModel>();
-        _serviceProvider = serviceCollection.BuildServiceProvider();
+        MainPage = new NavigationPage(new MainPage());
 
-        MainPage = new AppShell();
+        //var serviceCollection = new ServiceCollection();
+        //serviceCollection.AddDbContext<TaskDbContext>();
+        //serviceCollection.AddTransient<AddTaskViewModel>();
+        //_serviceProvider = serviceCollection.BuildServiceProvider();
+
+        //MainPage = new AppShell();
 	}
 }

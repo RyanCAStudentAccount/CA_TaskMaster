@@ -10,16 +10,16 @@
             VerticalOptions="Center">
 
             <Button 
-                x:Name="ViewTasksBtn"
-                Text="View Tasks"
-                Clicked="OnViewTaskClicked"
-                HorizontalOptions="Center"/>
+            x:Name="ViewTasksBtn"
+            Text="View Tasks"
+            Clicked="OnViewTaskClicked"
+            HorizontalOptions="Center"/>
 
             <Button 
-                x:Name="AddTaskBtn"
-                Text="Add Task"
-                Clicked="OnAddTaskClicked"
-                HorizontalOptions="Center"/>
+            x:Name="AddTaskBtn"
+            Text="Add Task"
+            Clicked="OnAddTaskClicked"
+            HorizontalOptions="Center"/>
 
         </VerticalStackLayout>
     </ScrollView>

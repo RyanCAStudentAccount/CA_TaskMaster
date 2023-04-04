@@ -1,4 +1,5 @@
-﻿using CA_TaskMaster.Views;
+﻿using CA_TaskMaster.ViewModels;
+using CA_TaskMaster.Views;
 
 namespace CA_TaskMaster;
 
@@ -18,6 +19,7 @@ public partial class MainPage : ContentPage
 
     private async void OnAddTaskClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CreateTask());
+        //await Navigation.PushAsync(new CreateTask());
+        await Navigation.PushAsync(new CreateTask(BindingContext as AddTaskViewModel));
     }
 }
