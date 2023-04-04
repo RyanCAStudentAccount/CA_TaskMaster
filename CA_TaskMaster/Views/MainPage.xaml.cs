@@ -11,8 +11,13 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
-    private async void OnAddTaskClicked(object sender, EventArgs e)
+    private async void OnViewTaskClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new AddTask());
+    }
+
+    private async void OnAddTaskClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new CreateTask());
     }
 }

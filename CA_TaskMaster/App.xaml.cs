@@ -1,11 +1,20 @@
-﻿namespace CA_TaskMaster;
+﻿using CA_TaskMaster.Data;
+using CA_TaskMaster.ViewModels;
+
+namespace CA_TaskMaster;
 
 public partial class App : Application
 {
-	public App()
+    private readonly IServiceProvider _serviceProvider;
+    public App()
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddDbContext<TaskDbContext>();
+        serviceCollection.AddTransient<AddTaskViewModel>();
+        _serviceProvider = serviceCollection.BuildServiceProvider();
+
+        MainPage = new AppShell();
 	}
 }

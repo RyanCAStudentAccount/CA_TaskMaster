@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CA_TaskMaster.Views.CreateTask"
+             xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster"
+             xmlns:converters="clr-namespace:CA_TaskMaster.Converters;assembly=CA_TaskMaster"
+             xmlns:system="clr-namespace:System;assembly=netstandard">
+
+    <ContentPage.BindingContext>
+        <viewmodels:AddTaskViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IntToStringConverter x:Key="IntToStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Margin="20">
+        <Entry x:Name="TaskNameEntry" Placeholder="Task Name" Text="{Binding NewTask.TaskName}" />
+        <Entry x:Name="TaskDescriptionEntry" Placeholder="Task Description" Text="{Binding NewTask.TaskDescription}" />
+        <Entry x:Name="TaskPriorityEntry" Placeholder="Task Priority (e.g., 1, 2, 3)" Keyboard="Numeric" Text="{Binding NewTask.TaskPriority, Converter={StaticResource IntToStringConverter}}" />
+        <Label Text="Due Date" />
+        <!--<DatePicker x:Name="TaskDueDatePicker" 
+            MinimumDate="{Binding MinimumDate}" 
+            MaximumDate="{Binding MaximumDate}" 
+            Date="{Binding NewTask.TaskDueDate}" />-->
+        <DatePicker x:Name="TaskDueDatePicker" Date="{Binding NewTask.TaskDueDate}" MinimumDate="{x:Static system:DateTime.Today}" />
+        <!--<DatePicker x:Name="TaskDueDatePicker" Date="{Binding NewTask.TaskDueDate}" />-->
+        <Button Text="Save Task" Command="{Binding AddTaskCommand}" />
+    </StackLayout>
+</ContentPage>
