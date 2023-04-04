@@ -13,6 +13,12 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using Microsoft.Maui.Controls;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Diagnostics;
+using System.Xml.Linq;
+using Microsoft.Maui.Controls;
+using INavigation = Microsoft.Maui.Controls.INavigation;
 
 namespace CA_TaskMaster.ViewModels
 {
@@ -45,18 +51,19 @@ namespace CA_TaskMaster.ViewModels
         public ICommand SaveChangesCommand { get; }
 
 
+
         // Delete Command
         public ICommand DeleteTaskCommand { get; }
 
         public ICommand ViewTaskCommand { get; }
         public ICommand EditTaskCommand { get; }
 
-
+        public ICommand UpdateTaskCommand { get; }
         public MyTask NewTask { get; set; } = new MyTask();
 
         private readonly TaskDbContext _dbContext;
 
-        private readonly INavigation _navigation;
+        public INavigation _navigation;
 
         public AddTaskViewModel() : this(null)
         {
@@ -120,7 +127,41 @@ namespace CA_TaskMaster.ViewModels
             //{
             //    // Navigate to a new page to edit the selected task
             //});
+            ViewTaskCommand = new Command<MyTask>(async (task) => await ExecuteViewTaskCommand(task));
+
+            EditTaskCommand = new Command<MyTask>(ExecuteEditTaskCommand);
+
         }
+
+        private async Task ExecuteViewTaskCommand(MyTask task)
+        {
+            await _navigation.PushAsync(new ViewTaskPage(task));
+        }
+
+        private async Task ExecuteUpdateTask()
+        {
+            _dbContext.Update(NewTask);
+            _dbContext.SaveChanges();
+            Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
+
+            await _navigation.PopAsync(); // Navigate back to the TaskListPage
+        }
+
+        private async void ExecuteEditTaskCommand(MyTask task)
+        {
+            NewTask = task;
+            await _navigation.PushAsync(new EditTaskPage(this));
+        }
+
+        public void UpdateTask(MyTask updatedTask)
+        {
+            var index = Tasks.IndexOf(Tasks.FirstOrDefault(t => t.TaskName == updatedTask.TaskName));
+            if (index != -1)
+            {
+                Tasks[index] = updatedTask;
+            }
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

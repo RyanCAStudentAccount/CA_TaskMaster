@@ -19,7 +19,16 @@
     <StackLayout Margin="20">
         <Entry x:Name="TaskNameEntry" Placeholder="Task Name" Text="{Binding NewTask.TaskName}" />
         <Entry x:Name="TaskDescriptionEntry" Placeholder="Task Description" Text="{Binding NewTask.TaskDescription}" />
-        <Entry x:Name="TaskPriorityEntry" Placeholder="Task Priority (e.g., 1, 2, 3)" Keyboard="Numeric" Text="{Binding NewTask.TaskPriority, Converter={StaticResource IntToStringConverter}}" />
+        <!--<Entry x:Name="TaskPriorityEntry" Placeholder="Task Priority (e.g., 1, 2, 3)" Keyboard="Numeric" Text="{Binding NewTask.TaskPriority, Converter={StaticResource IntToStringConverter}}" />-->
+        <Picker x:Name="TaskPriorityPicker" Title="Task Priority" SelectedItem="{Binding NewTask.TaskPriority}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Low</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>High</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
         <Label Text="Due Date" />
         <!--<DatePicker x:Name="TaskDueDatePicker" 
             MinimumDate="{Binding MinimumDate}" 
