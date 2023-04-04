@@ -9,36 +9,17 @@
             Padding="30,0" 
             VerticalOptions="Center">
 
-            <Label 
-                Text="Task Master"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                FontAttributes="Bold"
-                HorizontalOptions="Center" />
-
-            <Label 
-                Text="Your Tasks"
-                SemanticProperties.HeadingLevel="Level2"
-                FontSize="24"
-                FontAttributes="Bold"
-                HorizontalOptions="Start" />
-
-            <ListView
-                x:Name="TaskList"
-                HeightRequest="300"
-                RowHeight="50">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding TaskName}" Detail="{Binding TaskDetail}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Button 
+                x:Name="ViewTasksBtn"
+                Text="View Tasks"
+                Clicked="OnViewTaskClicked"
+                HorizontalOptions="Center"/>
 
             <Button 
                 x:Name="AddTaskBtn"
                 Text="Add Task"
                 Clicked="OnAddTaskClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
 
         </VerticalStackLayout>
     </ScrollView>
