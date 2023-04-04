@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CA_TaskMaster.Views.ViewTaskPage"
+             xmlns:models="clr-namespace:CA_TaskMaster.Models"
+             xmlns:viewModels="clr-namespace:CA_TaskMaster.ViewModels"
+             x:DataType="models:MyTask"
+             Title="Task Details">
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--<Label Grid.Row="0" Text="Task Name:" />
+        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Task.TaskName}" />
+        
+
+        <Label Grid.Row="1" Text="Task Description:" />
+        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Task.TaskDescription}" />
+        
+
+        <Label Grid.Row="2" Text="Task Priority:" />
+        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Task.TaskPriority}" />
+        
+
+        <Label Grid.Row="3" Text="Due Date:" />
+        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Task.TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" />-->
+    </Grid>
+</ContentPage>

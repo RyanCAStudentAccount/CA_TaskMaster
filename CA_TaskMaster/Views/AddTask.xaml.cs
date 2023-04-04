@@ -12,6 +12,7 @@ public partial class AddTask : ContentPage
 
     private async void OnCreateClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CreateTask());
+        await Navigation.PushAsync(new CreateTask(BindingContext as AddTaskViewModel));
     }
+
 }

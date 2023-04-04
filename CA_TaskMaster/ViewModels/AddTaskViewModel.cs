@@ -58,7 +58,7 @@ namespace CA_TaskMaster.ViewModels
 
         private readonly INavigation _navigation;
 
-        public AddTaskViewModel()
+        public AddTaskViewModel() : this(null)
         {
         }
 
@@ -84,6 +84,7 @@ namespace CA_TaskMaster.ViewModels
                     NewTask = new MyTask(); // Reset the new task form
                     Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
 
+                    
                     // Navigate to the Add Task page
                     await _navigation.PushAsync(new AddTask());
                 }
@@ -92,14 +93,6 @@ namespace CA_TaskMaster.ViewModels
                     Console.WriteLine("DbUpdateException: " + ex.InnerException?.Message);
                 }
             }); // To Add Tasks
-
-            //SaveChangesCommand = new Command(() =>
-            //{
-            //    _dbContext.Tasks.Update(SelectedTask);
-            //    _dbContext.SaveChanges();
-
-            //    Tasks = _dbContext.Tasks.ToList();
-            //}); // To Edit Tasks
 
             DeleteTaskCommand = new Command<MyTask>(async (task) =>
             {
