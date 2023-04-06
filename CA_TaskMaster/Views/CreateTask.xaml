@@ -16,11 +16,28 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Margin="20">
-        <Entry x:Name="TaskNameEntry" Placeholder="Task Name" Text="{Binding NewTask.TaskName}" />
-        <Entry x:Name="TaskDescriptionEntry" Placeholder="Task Description" Text="{Binding NewTask.TaskDescription}" />
-        <!--<Entry x:Name="TaskPriorityEntry" Placeholder="Task Priority (e.g., 1, 2, 3)" Keyboard="Numeric" Text="{Binding NewTask.TaskPriority, Converter={StaticResource IntToStringConverter}}" />-->
-        <Picker x:Name="TaskPriorityPicker" Title="Task Priority" SelectedItem="{Binding NewTask.TaskPriority}">
+    <Grid BackgroundColor="#F9F9F9" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Task Name" Grid.Row="0" Grid.Column="0" Margin="0,0,10,0" VerticalOptions="Center" />
+        <Entry x:Name="TaskNameEntry" Grid.Row="0" Grid.Column="1" Placeholder="Task Name" Text="{Binding NewTask.TaskName}" />
+
+        <Label Text="Task Description" Grid.Row="1" Grid.Column="0" Margin="0,10,10,0" VerticalOptions="Center" />
+        <Entry x:Name="TaskDescriptionEntry" Grid.Row="1" Grid.Column="1" Placeholder="Task Description" Text="{Binding NewTask.TaskDescription}" />
+
+        <Label Text="Task Priority" Grid.Row="2" Grid.Column="0" Margin="0,10,10,0" VerticalOptions="Center" />
+        <Picker x:Name="TaskPriorityPicker" Grid.Row="2" Grid.Column="1" Title="Task Priority" SelectedItem="{Binding NewTask.TaskPriority}">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Low</x:String>
@@ -29,13 +46,11 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <Label Text="Due Date" />
-        <!--<DatePicker x:Name="TaskDueDatePicker" 
-            MinimumDate="{Binding MinimumDate}" 
-            MaximumDate="{Binding MaximumDate}" 
-            Date="{Binding NewTask.TaskDueDate}" />-->
-        <DatePicker x:Name="TaskDueDatePicker" Date="{Binding NewTask.TaskDueDate}" MinimumDate="{x:Static system:DateTime.Today}" />
-        <!--<DatePicker x:Name="TaskDueDatePicker" Date="{Binding NewTask.TaskDueDate}" />-->
-        <Button Text="Save Task" Command="{Binding AddTaskCommand}" />
-    </StackLayout>
+
+        <Label Text="Due Date" Grid.Row="3" Grid.Column="0" Margin="0,10,10,0" VerticalOptions="Center" />
+        <DatePicker x:Name="TaskDueDatePicker" Grid.Row="3" Grid.Column="1" Date="{Binding NewTask.TaskDueDate}" MinimumDate="{x:Static system:DateTime.Today}" />
+
+        <Button Text="Save Task" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,20,0,0" Command="{Binding AddTaskCommand}" BackgroundColor="#2196F3" TextColor="White" FontSize="18" FontAttributes="Bold" />
+    </Grid>
 </ContentPage>
+

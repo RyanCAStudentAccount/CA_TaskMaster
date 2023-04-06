@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CA_TaskMaster.Views.ViewTaskPage">
-
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="CA_TaskMaster.Views.ViewTaskPage"
+          BackgroundColor="#F9F9F9">
     <StackLayout Margin="20">
-        <Label Text="{Binding TaskName}" FontSize="24" FontAttributes="Bold" />
-        <Label Text="{Binding TaskDescription}" FontSize="16" />
-        <Label Text="Due Date:" FontSize="16" FontAttributes="Bold" />
-        <Label Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="16" />
-        <Label Text="Priority:" FontSize="16" FontAttributes="Bold" />
-        <Label Text="{Binding TaskPriority}" FontSize="16" />
+        <StackLayout BackgroundColor="Red" HeightRequest="80" Padding="10">
+            <Label Text="{Binding TaskName}" TextColor="White" FontSize="28" FontAttributes="Bold"/>
+        </StackLayout>
+
+        <StackLayout BackgroundColor="White" Padding="20" Spacing="20">
+            <Label Text="{Binding TaskDescription}" FontSize="18" TextColor="#4E4E4E"/>
+            <StackLayout Orientation="Vertical" Margin="0,20,0,0">
+                <Label Text="Details" FontSize="20" TextColor="#4E4E4E" FontAttributes="Bold" />
+                <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,10,0,10"/>
+                <StackLayout Orientation="Horizontal" Spacing="20" Margin="0,10,0,10">
+                    <Label Text="Due Date:" FontSize="18" TextColor="#4E4E4E" />
+                    <Label Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="18" TextColor="#4E4E4E" />
+                </StackLayout>
+                <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,0,0,10"/>
+                <StackLayout Orientation="Horizontal" Spacing="20" Margin="0,10,0,10">
+                    <Label Text="Priority:" FontSize="18" TextColor="#4E4E4E" />
+                    <Label Text="{Binding TaskPriority}" FontSize="18" TextColor="#4E4E4E" />
+                </StackLayout>
+                <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,0,0,10"/>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>
+

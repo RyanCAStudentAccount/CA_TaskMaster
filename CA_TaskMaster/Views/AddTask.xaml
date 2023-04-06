@@ -22,14 +22,16 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Text="NAME" FontSize="16" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
             <Label Grid.Column="1" Text="DUE DATE" FontSize="16" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
             <Label Grid.Column="2" Text="PRIORITY" FontSize="16" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
-            <Label Grid.Column="3" Text="VIEW" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#28a745" HorizontalTextAlignment="Center" />
-            <Label Grid.Column="4" Text="EDIT" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#ffc107" HorizontalTextAlignment="Center" />
-            <Label Grid.Column="5" Text="DELETE" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#dc3545" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="3" Text="DONE" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#28a745" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="4" Text="VIEW" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#2196F3" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="5" Text="EDIT" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#ffc107" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="6" Text="DELETE" FontSize="16" VerticalOptions="Center" TextColor="White" FontAttributes="Bold" BackgroundColor="#dc3545" HorizontalTextAlignment="Center" />
 
         </Grid>
 
@@ -45,15 +47,17 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Column="0" Text="{Binding TaskName}" FontSize="16" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="16" VerticalOptions="Center" />
                             <Label Grid.Column="2" Text="{Binding TaskPriority}" FontSize="16" VerticalOptions="Center" />
 
-                            <Button Grid.Column="3" Text="View" FontSize="16" Command="{Binding Path=BindingContext.ViewTaskCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
-                            <Button Grid.Column="4" Text="Edit" FontSize="16" Command="{Binding Path=BindingContext.EditTaskCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
-                            <Button Grid.Column="5" Text="Delete" FontSize="16" Command="{Binding Path=BindingContext.DeleteTaskCommand, Source={x:Reference AddTaskPage}}" CommandParameter="{Binding}" />
+                            <Button Grid.Column="3" Text="Done" FontSize="14" BackgroundColor="#28a745" TextColor="White" Command="{Binding Path=BindingContext.MarkAsDoneCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
+                            <Button Grid.Column="4" Text="View" FontSize="14" BackgroundColor="#2196F3" TextColor="White" Command="{Binding Path=BindingContext.ViewTaskCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
+                            <Button Grid.Column="5" Text="Edit" FontSize="14" BackgroundColor="#ffc107" TextColor="White" Command="{Binding Path=BindingContext.EditTaskCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
+                            <Button Grid.Column="6" Text="Delete" FontSize="14" BackgroundColor="#dc3545" TextColor="White" Command="{Binding Path=BindingContext.DeleteTaskCommand, Source={x:Reference AddTaskPage}}" CommandParameter="{Binding}" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

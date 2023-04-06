@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CA_TaskMaster.Views.EditTaskPage">
+             x:Class="CA_TaskMaster.Views.EditTaskPage"
+             x:Name="EditTaskPageInstance"
+             xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster">
 
     <StackLayout Margin="20">
         <Label Text="Task Name:" FontSize="16" FontAttributes="Bold" />
@@ -20,7 +22,7 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <Button Text="Update Task" Command="{Binding UpdateTaskCommand}" />
+        <Button Text="Update Task" Clicked="OnUpdateClicked" />
     </StackLayout>
 
 </ContentPage>

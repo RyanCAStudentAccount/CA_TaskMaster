@@ -40,6 +40,7 @@ namespace CA_TaskMaster.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public CompletedTasksViewModel CompletedTasksViewModel { get; set; }
 
         // Selectable Task
         public MyTask SelectedTask { get; set; }
@@ -51,7 +52,7 @@ namespace CA_TaskMaster.ViewModels
         public ICommand SaveChangesCommand { get; }
 
 
-
+        public ICommand MarkAsDoneCommand { get; private set; }
         // Delete Command
         public ICommand DeleteTaskCommand { get; }
 
@@ -79,8 +80,10 @@ namespace CA_TaskMaster.ViewModels
             Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList();
             NewTask = new MyTask();
 
-            MinimumDate = DateTime.Now;
+            MinimumDate = DateTime.Now.AddDays(1); // Set the minimum date to the next day
             MaximumDate = DateTime.Now.AddYears(10);
+
+            CompletedTasksViewModel = new CompletedTasksViewModel();
 
             AddTaskCommand = new Command(async () =>
             {
@@ -91,9 +94,19 @@ namespace CA_TaskMaster.ViewModels
                     NewTask = new MyTask(); // Reset the new task form
                     Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
 
-                    
-                    // Navigate to the Add Task page
-                    await _navigation.PushAsync(new AddTask());
+
+                    // Assuming you are using Navigation.PushAsync and Navigation.PopAsync for navigation
+                    await _navigation.PopAsync(); // Pop the AddTaskPage
+                    var taskListPage = new AddTask();
+                    await _navigation.PushAsync(taskListPage); // Push the TaskListPage back onto the stack
+
+                    // Remove AddTaskPage from the navigation stack
+                    var mainMenuPage = _navigation.NavigationStack.FirstOrDefault(p => p.GetType() == typeof(MainPage)) as MainPage;
+                    if (mainMenuPage != null)
+                    {
+                        mainMenuPage.RemovePage(typeof(AddTask));
+                    }
+
                 }
                 catch (DbUpdateException ex)
                 {
@@ -118,19 +131,13 @@ namespace CA_TaskMaster.ViewModels
                 }
             }); // To Delete Tasks
 
-            //ViewTaskCommand = new Command<MyTask>((task) =>
-            //{
-            //    // Navigate to a new page to view the selected task
-            //});
-
-            //EditTaskCommand = new Command<MyTask>((task) =>
-            //{
-            //    // Navigate to a new page to edit the selected task
-            //});
             ViewTaskCommand = new Command<MyTask>(async (task) => await ExecuteViewTaskCommand(task));
 
             EditTaskCommand = new Command<MyTask>(ExecuteEditTaskCommand);
 
+            UpdateTaskCommand = new Command<MyTask>(async (task) => await ExecuteUpdateTask(task));
+
+            MarkAsDoneCommand = new Command<MyTask>(MarkTaskAsDone);
         }
 
         private async Task ExecuteViewTaskCommand(MyTask task)
@@ -138,19 +145,46 @@ namespace CA_TaskMaster.ViewModels
             await _navigation.PushAsync(new ViewTaskPage(task));
         }
 
-        private async Task ExecuteUpdateTask()
-        {
-            _dbContext.Update(NewTask);
-            _dbContext.SaveChanges();
-            Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
+        //public async Task ExecuteUpdateTask(MyTask task)
+        //{
+        //    _dbContext.Update(NewTask);
+        //    _dbContext.SaveChanges();
+        //    Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
 
-            await _navigation.PopAsync(); // Navigate back to the TaskListPage
+        //    await _navigation.PopAsync(); // Navigate back to the TaskListPage
+        //}
+
+        public async Task ExecuteUpdateTask(MyTask task)
+        {
+            try
+            {
+                // Ensure TaskPriority has a value before updating
+                if (task.TaskPriority == null)
+                {
+                    // Set a default value or show an error message to the user
+                    task.TaskPriority = "Default";
+                }
+
+                _dbContext.Update(task); // Update `task` instead of `NewTask`
+                _dbContext.SaveChanges();
+                Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
+
+                await _navigation.PopAsync(); // Navigate back to the TaskListPage
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the exception details or display them in a message box
+                Debug.WriteLine($"Error: {ex.Message}");
+                Debug.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+
+                // You can also consider showing an error message to the user using a DisplayAlert or similar
+            }
         }
+
 
         private async void ExecuteEditTaskCommand(MyTask task)
         {
-            NewTask = task;
-            await _navigation.PushAsync(new EditTaskPage(this));
+            await _navigation.PushAsync(new EditTaskPage(task, this));
         }
 
         public void UpdateTask(MyTask updatedTask)
@@ -161,6 +195,34 @@ namespace CA_TaskMaster.ViewModels
                 Tasks[index] = updatedTask;
             }
         }
+
+        public void RefreshTasks()
+        {
+            Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList();
+        }
+
+        private void MarkTaskAsDone(MyTask task)
+        {
+            if (task != null)
+            {
+                // Update the task's completion status
+                task.TaskCompletionStatus = true;
+
+                using (var db = new TaskDbContext())
+                {
+                    // Save the changes to the database
+                    db.Tasks.Update(task);
+                    db.SaveChanges();
+                }
+
+                // Remove the task from the active tasks list
+                Tasks.Remove(task);
+
+                // Add the task to the completed tasks list in CompletedTasksViewModel
+                CompletedTasksViewModel.CompletedTasks.Add(task);
+            }
+        }
+
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
