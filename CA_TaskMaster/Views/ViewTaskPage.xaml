@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CA_TaskMaster.Views.ViewTaskPage"
-             xmlns:models="clr-namespace:CA_TaskMaster.Models"
-             xmlns:viewModels="clr-namespace:CA_TaskMaster.ViewModels"
-             x:DataType="models:MyTask"
-             Title="Task Details">
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="CA_TaskMaster.Views.ViewTaskPage"
+          BackgroundColor="#F9F9F9">
+    <StackLayout Margin="20">
+        <StackLayout BackgroundColor="Red" HeightRequest="80" Padding="10">
+            <Label Text="{Binding TaskName}" TextColor="White" FontSize="28" FontAttributes="Bold"/>
+        </StackLayout>
 
-    <Grid Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="White" Padding="20" Spacing="20">
+            <Label Text="{Binding TaskDescription}" FontSize="18" TextColor="#4E4E4E"/>
+            <StackLayout Orientation="Vertical" Margin="0,20,0,0">
+                <Label Text="Details" FontSize="20" TextColor="#4E4E4E" FontAttributes="Bold" />
+                <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,10,0,10"/>
+                <StackLayout Orientation="Horizontal" Spacing="20" Margin="0,10,0,10">
+                    <Label Text="Due Date:" FontSize="18" TextColor="#4E4E4E" />
+                    <Label Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="18" TextColor="#4E4E4E" />
+                </StackLayout>
+                <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,0,0,10"/>
+                <StackLayout Orientation="Horizontal" Spacing="20" Margin="0,10,0,10">
+                    <Label Text="Priority:" FontSize="18" TextColor="#4E4E4E" />
+                    <Label Text="{Binding TaskPriority}" FontSize="18" TextColor="#4E4E4E" />
+                </StackLayout>
+                <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,0,0,10"/>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
 
-        <!--<Label Grid.Row="0" Text="Task Name:" />
-        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Task.TaskName}" />
-        
-
-        <Label Grid.Row="1" Text="Task Description:" />
-        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Task.TaskDescription}" />
-        
-
-        <Label Grid.Row="2" Text="Task Priority:" />
-        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Task.TaskPriority}" />
-        
-
-        <Label Grid.Row="3" Text="Due Date:" />
-        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Task.TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" />-->
-    </Grid>
 </ContentPage>
+

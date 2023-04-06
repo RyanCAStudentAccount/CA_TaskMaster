@@ -11,7 +11,7 @@ namespace CA_TaskMaster.Models
         public int TaskId { get; set; }
         public string TaskName { get; set; }
         public string TaskDescription { get; set; }
-        public int TaskPriority { get; set; }
+        public string TaskPriority { get; set; }
         public DateTime TaskDueDate { get; set; }
         public bool TaskCompletionStatus { get; set; }
     }
