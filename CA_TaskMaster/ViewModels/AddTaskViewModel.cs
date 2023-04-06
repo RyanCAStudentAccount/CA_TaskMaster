@@ -119,6 +119,13 @@ namespace CA_TaskMaster.ViewModels
                 bool answer = await Application.Current.MainPage.DisplayAlert("Delete Task", "Are you sure you want to delete this task?", "Yes", "No");
                 if (answer)
                 {
+                    // Detach any existing tracked entity with the same TaskId
+                    var existingEntity = _dbContext.Tasks.Local.FirstOrDefault(t => t.TaskId == task.TaskId);
+                    if (existingEntity != null)
+                    {
+                        _dbContext.Entry(existingEntity).State = EntityState.Detached;
+                    }
+
                     // Find the task in the database
                     MyTask taskToDelete = await _dbContext.Tasks.AsNoTracking().FirstOrDefaultAsync(t => t.TaskId == task.TaskId);
 
@@ -165,7 +172,14 @@ namespace CA_TaskMaster.ViewModels
                     task.TaskPriority = "Default";
                 }
 
-                _dbContext.Update(task); // Update `task` instead of `NewTask`
+                // Detach any existing tracked entity with the same TaskId
+                var existingEntity = _dbContext.Tasks.Local.FirstOrDefault(t => t.TaskId == task.TaskId);
+                if (existingEntity != null)
+                {
+                    _dbContext.Entry(existingEntity).State = EntityState.Detached;
+                }
+
+                _dbContext.Update(task); // Update `task`
                 _dbContext.SaveChanges();
                 Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
 
@@ -180,6 +194,7 @@ namespace CA_TaskMaster.ViewModels
                 // You can also consider showing an error message to the user using a DisplayAlert or similar
             }
         }
+
 
 
         private async void ExecuteEditTaskCommand(MyTask task)
@@ -198,7 +213,7 @@ namespace CA_TaskMaster.ViewModels
 
         public void RefreshTasks()
         {
-            Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList();
+            Tasks = _dbContext.Tasks.AsNoTracking().Where(t => !t.TaskCompletionStatus).ToList();
         }
 
         private void MarkTaskAsDone(MyTask task)
@@ -220,6 +235,9 @@ namespace CA_TaskMaster.ViewModels
 
                 // Add the task to the completed tasks list in CompletedTasksViewModel
                 CompletedTasksViewModel.CompletedTasks.Add(task);
+
+                // Refresh the task list
+                RefreshTasks();
             }
         }
 
