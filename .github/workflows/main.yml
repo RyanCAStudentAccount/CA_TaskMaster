@@ -7,38 +7,42 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
       with:
-        node-version: 14
+        dotnet-version: 6.0.x
 
-    - name: Install dependencies
-      run: npm ci
+    - name: Restore dependencies
+      run: dotnet restore
 
-    - name: Run tests
-      run: npm test
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
 
   deploy:
     needs: build_and_test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
       with:
-        node-version: 14
+        dotnet-version: 6.0.x
 
-    - name: Install dependencies
-      run: npm ci
+    - name: Restore dependencies
+      run: dotnet restore
 
-    - name: Deploy to production
-      run: npm run deploy
+    - name: Publish
+      run: dotnet publish --configuration Release --no-build --output ./publish
+
