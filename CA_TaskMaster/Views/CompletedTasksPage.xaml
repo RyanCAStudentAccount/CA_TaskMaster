@@ -3,38 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CA_TaskMaster.Views.CompletedTasksPage"
              x:Name="CompletedTasksPageInstance"
-             xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster">
+             xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster"
+             BackgroundColor="LightGrey">
 
     <ContentPage.BindingContext>
         <viewmodels:CompletedTasksViewModel />
     </ContentPage.BindingContext>
 
-    <StackLayout>
-        <StackLayout BackgroundColor="#ff7043" HeightRequest="50" Padding="10">
-            <Label Text="Completed Tasks" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+    <ScrollView>
+        <StackLayout Spacing="15" Padding="20">
+            <Frame BackgroundColor="#4E4E4E" Padding="10" CornerRadius="10">
+                <Label Text="Completed Tasks" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+            </Frame>
+
+            <ListView ItemsSource="{Binding CompletedTasks}" BackgroundColor="Transparent" Margin="0,10,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10" BackgroundColor="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Text="{Binding TaskName}" FontSize="16" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="16" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding TaskPriority}" FontSize="16" VerticalOptions="Center" />
+                                <Button Grid.Column="3" Text="Delete" Command="{Binding Source={x:Reference CompletedTasksPageInstance}, Path=BindingContext.DeleteTaskCommand}" CommandParameter="{Binding}" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label x:Name="NoDataLabel" Text="No data available." FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="False" />
         </StackLayout>
-
-        <ListView ItemsSource="{Binding CompletedTasks}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label Grid.Column="0" Text="{Binding TaskName}" FontSize="16" VerticalOptions="Center" />
-                            <Label Grid.Column="1" Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="16" VerticalOptions="Center" />
-                            <Label Grid.Column="2" Text="{Binding TaskPriority}" FontSize="16" VerticalOptions="Center" />
-                            <Button Grid.Column="3" Text="Delete" Command="{Binding Source={x:Reference CompletedTasksPageInstance}, Path=BindingContext.DeleteTaskCommand}" CommandParameter="{Binding}" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Label x:Name="NoDataLabel" Text="No data available." FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="False" />
-    </StackLayout>
+    </ScrollView>
 </ContentPage>

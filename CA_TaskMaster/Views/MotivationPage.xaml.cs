@@ -28,5 +28,10 @@ namespace CA_TaskMaster.Views
             int index = random.Next(_motivationQuotes.Count);
             MotivationQuoteLabel.Text = _motivationQuotes[index];
         }
+
+        private async void OnMenuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }
