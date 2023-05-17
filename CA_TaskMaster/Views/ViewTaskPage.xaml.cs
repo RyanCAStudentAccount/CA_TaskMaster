@@ -13,5 +13,13 @@ namespace CA_TaskMaster.Views
             InitializeComponent();
             BindingContext = task;
         }
+
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            if (BindingContext is MyTask task)
+            {
+                await Navigation.PopAsync();
+            }
+        }
     }
 }

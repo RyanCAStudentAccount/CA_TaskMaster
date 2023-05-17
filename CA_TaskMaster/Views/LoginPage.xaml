@@ -2,14 +2,46 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CA_TaskMaster.Views.LoginPage"
+             BackgroundColor="#f0f0f0"
              Title="Login">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" Padding="20">
-            <Label Text="Username" />
-            <Entry x:Name="UsernameEntry" Placeholder="Enter your username" />
-            <Label Text="Password" />
-            <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True" />
-            <Button Text="Login" Clicked="OnLoginClicked" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout VerticalOptions="CenterAndExpand" 
+                         HorizontalOptions="FillAndExpand"
+                         Spacing="20"
+                         Padding="30">
+                <Frame Padding="20" 
+                       CornerRadius="10" 
+                       HasShadow="True" 
+                       BackgroundColor="#fff">
+                    <StackLayout Spacing="10">
+                        <Label Text="Username" 
+                               TextColor="#333" 
+                               FontSize="18"/>
+                        <Entry x:Name="UsernameEntry" 
+                               Placeholder="Enter your username" 
+                               PlaceholderColor="#999" 
+                               TextColor="#333"
+                               FontSize="16"/>
+                        <Label Text="Password" 
+                               TextColor="#333" 
+                               FontSize="18"/>
+                        <Entry x:Name="PasswordEntry" 
+                               Placeholder="Enter your password" 
+                               IsPassword="True"
+                               PlaceholderColor="#999" 
+                               TextColor="#333"
+                               FontSize="16"/>
+                        <Button Text="Login" 
+                                Clicked="OnLoginClicked" 
+                                BackgroundColor="#ff7043" 
+                                TextColor="#fff"
+                                CornerRadius="10"
+                                Padding="10"
+                                FontSize="18"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
