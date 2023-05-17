@@ -1,28 +1,71 @@
+# name of CI/CD pipeline
 name: CI/CD Pipeline
 
+# Specifies when the pipeline should run. 
+# In this case, it's configured to run when code is pushed or a pull request is opened against the 'main' branch.
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
+# Jobs are the tasks the pipeline will run. 
+# We can have multiple jobs, and they can run in parallel or sequentially.
 jobs:
+  # This job is responsible for building the project and running tests.
   build_and_test:
+    # This specifies the type of machine the job will run on.
     runs-on: windows-latest
 
+    # Steps are the individual tasks within a job.
     steps:
+    # This step checks out the repository's code onto the machine.
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # This step sets up the .NET environment on the machine.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
 
+    # This step restores any dependencies the project needs.
     - name: Restore dependencies
       run: dotnet restore
 
+    # This step builds the project, using the previously restored dependencies.
     - name: Build
       run: dotnet build --no-restore
 
+    # This step runs the project's tests.
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
+  # This is the second job, responsible for deploying the application to production.
+  deploy_to_production:
+    # This job will only run if the 'build_and_test' job has completed successfully.
+    needs: build_and_test
+    # This job runs on the latest version of Windows.
+    runs-on: windows-latest
+    # This job will only run if the branch being pushed to is 'main'.
+    if: github.ref == 'refs/heads/main'
+    steps:
+    # This step checks out the code on the machine.
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # This step sets up .NET on the machine.
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    # This step is where you'd put your deployment steps.
+    - name: Deploy to Production
+      run: echo "Deploying to production..."
