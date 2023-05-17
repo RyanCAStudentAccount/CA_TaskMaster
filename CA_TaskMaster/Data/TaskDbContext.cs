@@ -12,6 +12,11 @@ namespace CA_TaskMaster.Data
     {
         public DbSet<MyTask> Tasks { get; set; }
 
+        //public TaskDbContext(DbContextOptions<TaskDbContext> options)
+        //: base(options)
+        //    {
+        //    }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlite("Data Source=tasks.db");

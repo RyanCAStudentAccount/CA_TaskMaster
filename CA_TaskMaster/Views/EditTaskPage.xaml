@@ -3,26 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CA_TaskMaster.Views.EditTaskPage"
              x:Name="EditTaskPageInstance"
-             xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster">
+             xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster"
+             Title="Edit Task"
+             BackgroundColor="LightGray">
 
-    <StackLayout Margin="20">
-        <Label Text="Task Name:" FontSize="16" FontAttributes="Bold" />
-        <Label Text="{Binding TaskName}" FontSize="16" />
-        <Label Text="Task Description:" FontSize="16" FontAttributes="Bold" />
-        <Editor Text="{Binding TaskDescription, Mode=TwoWay}" />
-        <Label Text="Due Date:" FontSize="16" FontAttributes="Bold" />
-        <DatePicker Date="{Binding TaskDueDate, Mode=TwoWay}" />
-        <Label Text="Priority:" FontSize="16" FontAttributes="Bold" />
-        <Picker Title="Select Priority" SelectedItem="{Binding TaskPriority, Mode=TwoWay}">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Low</x:String>
-                    <x:String>Medium</x:String>
-                    <x:String>High</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
-        <Button Text="Update Task" Clicked="OnUpdateClicked" />
-    </StackLayout>
+    <ScrollView>
+        <StackLayout Spacing="15" Padding="20">
+            <Label Text="Task Name:" FontSize="18" FontAttributes="Bold" />
+            <Entry x:Name="TaskNameEntry" Text="{Binding TaskName}" FontSize="16" Placeholder="Enter task name" BackgroundColor="White"/>
+
+            <Label Text="Task Description:" FontSize="18" FontAttributes="Bold" />
+            <Editor x:Name="TaskDescriptionEditor" Text="{Binding TaskDescription, Mode=TwoWay}" Placeholder="Enter task description" BackgroundColor="White"/>
+
+            <Label Text="Due Date:" FontSize="18" FontAttributes="Bold" />
+            <DatePicker x:Name="TaskDueDatePicker" Date="{Binding TaskDueDate, Mode=TwoWay}" BackgroundColor="White"/>
+
+            <Label Text="Priority:" FontSize="18" FontAttributes="Bold" />
+            <Picker x:Name="TaskPriorityPicker" Title="Select Priority" SelectedItem="{Binding TaskPriority, Mode=TwoWay}" BackgroundColor="White">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Low</x:String>
+                        <x:String>Medium</x:String>
+                        <x:String>High</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Button x:Name="UpdateTaskButton" Text="Update Task" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnUpdateClicked" />
+        </StackLayout>
+    </ScrollView>
 
 </ContentPage>

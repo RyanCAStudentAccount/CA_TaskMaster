@@ -9,7 +9,7 @@
                    FontAttributes="Bold"
                    FontSize="Large" />
             <Label Text="CA_TaskMaster is a task management app that helps you organize and prioritize your tasks, view your progress, and get daily motivation." />
-            <!-- Add more information about your app here -->
+            
         </StackLayout>
     </ScrollView>
 </ContentPage>

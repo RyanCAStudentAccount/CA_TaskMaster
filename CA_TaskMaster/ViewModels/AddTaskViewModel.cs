@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using Microsoft.Maui.Controls;
 using INavigation = Microsoft.Maui.Controls.INavigation;
+using System.Timers;
 
 namespace CA_TaskMaster.ViewModels
 {
@@ -41,6 +42,7 @@ namespace CA_TaskMaster.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
         public CompletedTasksViewModel CompletedTasksViewModel { get; set; }
+        public ExpiredTasksViewModel ExpiredTasksViewModel { get; set; }
 
         // Selectable Task
         public MyTask SelectedTask { get; set; }
@@ -84,9 +86,21 @@ namespace CA_TaskMaster.ViewModels
             MaximumDate = DateTime.Now.AddYears(10);
 
             CompletedTasksViewModel = new CompletedTasksViewModel();
+            ExpiredTasksViewModel = new ExpiredTasksViewModel();
+
+            // Start a timer to check for expired tasks every minute 
+            //Timer timer = new Timer(60 * 1000);
+            //timer.Elapsed += CheckForExpiredTasks;
+            //timer.Start();
 
             AddTaskCommand = new Command(async () =>
             {
+                if (!AreFieldsValid())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Please fill in all fields before saving.", "OK");
+                    return;
+                }
+
                 try
                 {
                     _dbContext.Tasks.Add(NewTask);
@@ -95,7 +109,6 @@ namespace CA_TaskMaster.ViewModels
                     Tasks = (IList<MyTask>)_dbContext.Tasks.AsNoTracking().ToList(); // Refresh the tasks list
 
 
-                    // Assuming you are using Navigation.PushAsync and Navigation.PopAsync for navigation
                     await _navigation.PopAsync(); // Pop the AddTaskPage
                     var taskListPage = new AddTask();
                     await _navigation.PushAsync(taskListPage); // Push the TaskListPage back onto the stack
@@ -165,6 +178,12 @@ namespace CA_TaskMaster.ViewModels
         {
             try
             {
+                //if (!AreFieldsValid())
+                //{
+                //    await Application.Current.MainPage.DisplayAlert("Error", "Please fill in all fields before saving.", "OK");
+                //    return;
+                //}
+
                 // Ensure TaskPriority has a value before updating
                 if (task.TaskPriority == null)
                 {
@@ -187,15 +206,12 @@ namespace CA_TaskMaster.ViewModels
             }
             catch (DbUpdateException ex)
             {
-                // Log the exception details or display them in a message box
+                // Log the exception details
                 Debug.WriteLine($"Error: {ex.Message}");
                 Debug.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
 
-                // You can also consider showing an error message to the user using a DisplayAlert or similar
             }
         }
-
-
 
         private async void ExecuteEditTaskCommand(MyTask task)
         {
@@ -216,35 +232,77 @@ namespace CA_TaskMaster.ViewModels
             Tasks = _dbContext.Tasks.AsNoTracking().Where(t => !t.TaskCompletionStatus).ToList();
         }
 
-        private void MarkTaskAsDone(MyTask task)
+        private async void CheckForExpiredTasks(object sender, ElapsedEventArgs e)
+        {
+            var expiredTasks = Tasks.Where(t => t.TaskDueDate < DateTime.Now).ToList();
+
+            if (expiredTasks.Any())
+            {
+                foreach (var task in expiredTasks)
+                {
+                    // Update the task in the database (if needed)
+                    // Remove the task from the current task list
+                    Tasks.Remove(task);
+
+                    // Add the task to the expired tasks list
+                    ExpiredTasksViewModel.ExpiredTasks.Add(task);
+                }
+
+                // Refresh the task lists
+                RefreshTasks();
+                ExpiredTasksViewModel.LoadExpiredTasks();
+            }
+        }
+
+        private async void MarkTaskAsDone(MyTask task)
         {
             if (task != null)
             {
-                // Update the task's completion status
-                task.TaskCompletionStatus = true;
+                // Show a confirmation popup
+                bool answer = await Application.Current.MainPage.DisplayAlert("Mark as Done", "Are you sure you want to mark this task as completed?", "Yes", "No");
 
-                using (var db = new TaskDbContext())
+                // If the user confirms, update the task's completion status
+                if (answer)
                 {
-                    // Save the changes to the database
-                    db.Tasks.Update(task);
-                    db.SaveChanges();
+                    task.TaskCompletionStatus = true;
+
+                    using (var db = new TaskDbContext())
+                    {
+                        // Save the changes to the database
+                        db.Tasks.Update(task);
+                        db.SaveChanges();
+                    }
+
+                    // Remove the task from the active tasks list
+                    Tasks.Remove(task);
+
+                    // Add the task to the completed tasks list in CompletedTasksViewModel
+                    CompletedTasksViewModel.CompletedTasks.Add(task);
+
+                    // Refresh the task list
+                    RefreshTasks();
                 }
-
-                // Remove the task from the active tasks list
-                Tasks.Remove(task);
-
-                // Add the task to the completed tasks list in CompletedTasksViewModel
-                CompletedTasksViewModel.CompletedTasks.Add(task);
-
-                // Refresh the task list
-                RefreshTasks();
             }
+        }
+
+        public bool AreFieldsValid()
+        {
+            if (string.IsNullOrWhiteSpace(NewTask.TaskName) ||
+                string.IsNullOrWhiteSpace(NewTask.TaskDescription) ||
+                string.IsNullOrWhiteSpace(NewTask.TaskPriority) ||
+                NewTask.TaskDueDate == DateTime.MinValue)
+            {
+                return false;
+            }
+
+            return true;
         }
 
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            (AddTaskCommand as Command)?.ChangeCanExecute();
         }
 
         public DateTime MinimumDate { get; }

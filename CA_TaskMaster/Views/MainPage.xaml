@@ -1,58 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CA_TaskMaster.MainPage">
+             x:Class="CA_TaskMaster.MainPage"
+             BackgroundColor="#f0f0f0">
 
     <ScrollView>
-        <VerticalStackLayout 
-            Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
+        <StackLayout 
+            Spacing="20" 
+            Padding="30"
+            VerticalOptions="CenterAndExpand">
+
+            <Image
+                x:Name="LogoImage"
+                Source="logo.png"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20" />
 
             <Button 
                 x:Name="AddTaskBtn"
-                Text="&#xf067; Create New Task"
+                Text="Create New Task"
+                BackgroundColor="#ff7043"
                 Clicked="OnViewTaskClicked"
-                BackgroundColor="#2196F3">
+                TextColor="#fff"
+                CornerRadius="10"
+                Padding="10"
+                FontSize="18">
             </Button>
 
             <Button 
                 x:Name="ViewTasksBtn"
-                Text="&#xf0ae; Active Tasks"
+                Text="Active Tasks"
                 Clicked="OnViewTaskClicked"
-                BackgroundColor="#2196F3">
+                BackgroundColor="#ff7043"
+                TextColor="#fff"
+                CornerRadius="10"
+                Padding="10"
+                FontSize="18">
             </Button>
 
             <Button 
                 x:Name="CompletedBtn"
-                Text="&#xf0c0; Completed Tasks"
+                Text="Completed Tasks"
                 Clicked="OnCompletedTasksClicked"
-                BackgroundColor="#2196F3">
+                BackgroundColor="#ff7043"
+                TextColor="#fff"
+                CornerRadius="10"
+                Padding="10"
+                FontSize="18">
             </Button>
 
             <Button 
                 x:Name="MotivationBtn"
-                Text="&#xf005; Daily Motivation"
+                Text="Daily Motivation"
                 Clicked="OnMotBtnClicked"
-                BackgroundColor="#2196F3">
+                BackgroundColor="#ff7043"
+                TextColor="#fff"
+                CornerRadius="10"
+                Padding="10"
+                FontSize="18">
             </Button>
 
             <Button 
                 x:Name="AboutBtn"
-                Text="&#xf129; About"
+                Text="About"
                 Clicked="OnAboutBtnClicked"
-                BackgroundColor="#2196F3">
+                BackgroundColor="#ff7043"
+                TextColor="#fff"
+                CornerRadius="10"
+                Padding="10"
+                FontSize="18">
             </Button>
 
             <Button 
                 x:Name="SignOutBtn"
-                Text="&#xf2f5; Sign Out"
+                Text="Sign Out"
                 Clicked="OnLogOutClicked"
-                BackgroundColor="#2196F3">
+                BackgroundColor="#ff7043"
+                TextColor="#fff"
+                CornerRadius="10"
+                Padding="10"
+                FontSize="18">
             </Button>
-            
 
-        </VerticalStackLayout>
+        </StackLayout>
     </ScrollView>
 
 </ContentPage>

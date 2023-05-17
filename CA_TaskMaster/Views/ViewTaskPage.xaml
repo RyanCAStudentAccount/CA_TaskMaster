@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           x:Class="CA_TaskMaster.Views.ViewTaskPage"
-          BackgroundColor="#F9F9F9">
+          BackgroundColor="LightGray">
     <StackLayout Margin="20">
-        <StackLayout BackgroundColor="Red" HeightRequest="80" Padding="10">
-            <Label Text="{Binding TaskName}" TextColor="White" FontSize="28" FontAttributes="Bold"/>
+        <StackLayout BackgroundColor="White" HeightRequest="80" Padding="10">
+            <Label Text="{Binding TaskName}" TextColor="White" FontSize="20" FontAttributes="Bold"/>
         </StackLayout>
 
         <StackLayout BackgroundColor="White" Padding="20" Spacing="20">
@@ -24,6 +24,9 @@
                 </StackLayout>
                 <BoxView HeightRequest="1" Color="#B3B3B3" HorizontalOptions="FillAndExpand" Margin="0,0,0,10"/>
             </StackLayout>
+
+            <Button x:Name="UpdateTaskButton" Text="Update Task" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnBackClicked" />
+            
         </StackLayout>
     </StackLayout>
 
