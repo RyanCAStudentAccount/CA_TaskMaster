@@ -2,14 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CA_TaskMaster.Views.AboutPage"
-             Title="About">
+             Title="About"
+             BackgroundColor="LightGray">
+
     <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
+        <Grid BackgroundColor="White" 
+              Margin="20"
+              Padding="20" 
+              RowSpacing="20"
+              VerticalOptions="CenterAndExpand">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
             <Label Text="About CA_TaskMaster"
-                   FontAttributes="Bold"
-                   FontSize="Large" />
-            <Label Text="CA_TaskMaster is a task management app that helps you organize and prioritize your tasks, view your progress, and get daily motivation." />
-            
-        </StackLayout>
+                   FontSize="14" 
+                   HorizontalOptions="CenterAndExpand" 
+                   TextColor="#ff7043"
+                   VerticalOptions="CenterAndExpand" />
+
+            <Frame Grid.Row="1" 
+                   Padding="10" 
+                   CornerRadius="10"
+                   HorizontalOptions="FillAndExpand">
+                <Label Text="CA_TaskMaster is a task management app that helps you organize and prioritize your tasks, view your progress, and get daily motivation."
+                       FontSize="12"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand" />
+            </Frame>
+
+            <Button x:Name="MenuButton" Grid.Row ="2" Text="Back to Main Menu" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnMenuClicked" />
+
+        </Grid>
     </ScrollView>
 </ContentPage>
