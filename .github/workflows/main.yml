@@ -67,5 +67,5 @@ jobs:
         dotnet-version: 6.0.x
 
     # This step is where you'd put your deployment steps.
-    - name: Deploy to Production
-      run: echo "Deploying to production..."
+    #- name: Deploy to Production
+     # run: echo "Deploying to production..."
