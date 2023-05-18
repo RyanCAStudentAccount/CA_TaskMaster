@@ -5,37 +5,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata;
+using NUnit.Framework;
+//using CA_TaskMaster.ViewModels;
 
 namespace TaskMaster.UnitTests
 {
+    [TestFixture]
     public class AddTaskTest
     {
-        //private Mock<INavigation> _mockNavigation;
-        //private Mock<TaskDbContext> _mockDbContext;
         //private AddTaskViewModel _viewModel;
+        //private Mock<TaskDbContext> _dbContext;
 
-        //public AddTaskTest()
+        //[SetUp]
+        //public void SetUp()
         //{
-        //    _mockNavigation = new Mock<INavigation>();
-        //    _mockDbContext = new Mock<TaskDbContext>();
-
-        //    _viewModel = new AddTaskViewModel(_mockNavigation.Object, _mockDbContext.Object);
+        //    // This is run before each test. It's like a mini constructor for tests.
+        //    _dbContext = new Mock<TaskDbContext>();  // We're using Moq here to mock our DbContext.
+        //    _viewModel = new AddTaskViewModel(_dbContext.Object); // Insert your actual ViewModel constructor parameters here.
         //}
 
-        //[Fact]
-        //public void AddTaskCommand_ShouldAddTask()
+        //[Test]
+        //public async Task AddTaskCommand_ShouldAddTask()
         //{
         //    // Arrange
-        //    var newTask = new MyTask { TaskName = "Test task" };
-        //    _viewModel.NewTask = newTask;
+        //    MyTask taskToAdd = new MyTask
+        //    {
+        //        TaskId = 1,
+        //        TaskName = "Test Task",
+        //        TaskDescription = "Test Task Description",
+        //        TaskPriority = "High",
+        //        TaskDueDate = DateTime.Now.AddDays(1),
+        //        TaskCompletionStatus = false
+        //    };
+
+        //    _viewModel.NewTask = taskToAdd;
 
         //    // Act
-        //    _viewModel.AddTaskCommand.Execute(null);
+        //    await _viewModel.AddTaskCommand.ExecuteAsync();
 
         //    // Assert
-        //    _mockDbContext.Verify(db => db.Tasks.Add(newTask), Times.Once);
-        //    _mockDbContext.Verify(db => db.SaveChanges(), Times.Once);
+        //    _dbContext.Verify(db => db.Add(It.IsAny<MyTask>()), Times.Once);
+        //    _dbContext.Verify(db => db.SaveChanges(), Times.Once);
         //}
     }
-
 }

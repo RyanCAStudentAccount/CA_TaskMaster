@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CA_TaskMaster.Views.MotivationPage"
              Title="Daily Motivation"
+             Background="Black"
              BackgroundColor="LightGray">
 
     <ScrollView>
