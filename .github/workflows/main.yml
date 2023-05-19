@@ -30,6 +30,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+        
+    - name: Install MAUI workloads
+      run: |
+        dotnet workload install maui
+        dotnet workload install maui-android
+        dotnet workload install maui-ios
+        dotnet workload install maccatalyst
 
     # This step restores any dependencies the project needs.
     - name: Restore dependencies
