@@ -7,36 +7,87 @@
              Background="Black">
 
     <ScrollView>
-        <Grid BackgroundColor="White" 
+
+
+        <StackLayout 
+            Spacing="20" 
+            Padding="20"
+            VerticalOptions="CenterAndExpand">
+
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                <Label Text="TaskMaster" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                       HorizontalOptions="Center"
+                       FontFamily="TimesNewRoman"/>
+
+                <Label Text="The Task Management Solution" 
+                               TextColor="White" 
+                               FontAttributes="Italic"
+                               FontSize="14"
+                       FontFamily="TimesNewRoman"/>
+
+                <Image Aspect="AspectFill" Source="tasklogo.jpg"
+                                           WidthRequest="50" HeightRequest="50" Margin="5"/>
+
+
+            </VerticalStackLayout>
+
+
+            <Grid BackgroundColor="White" 
               Margin="20"
               Padding="20" 
               RowSpacing="20"
               VerticalOptions="CenterAndExpand">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Label Text="About CA_TaskMaster"
-                   FontSize="14" 
+                <Label Text="About the App"
+                   FontSize="25" 
                    HorizontalOptions="CenterAndExpand" 
                    TextColor="#ff7043"
                    VerticalOptions="CenterAndExpand" />
 
-            <Frame Grid.Row="1" 
+                <Frame Grid.Row="1" 
                    Padding="10" 
                    CornerRadius="10"
                    HorizontalOptions="FillAndExpand">
-                <Label Text="CA_TaskMaster is a task management app that helps you organize and prioritize your tasks, view your progress, and get daily motivation."
-                       FontSize="12"
+                    <Label Text="The TaskMaster app is a task management app that allows you to:"
+                       FontSize="18"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand" />
-            </Frame>
+                </Frame>
 
-            <Button x:Name="MenuButton" Grid.Row ="2" Text="Back to Main Menu" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnMenuClicked" />
+                <Label Text="-  Organize and prioritize your tasks"
+                    Grid.Row="2"
+                    FontSize="15"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" />
 
-        </Grid>
+                <Label Text="-  View your progress"
+                    Grid.Row="3"
+                    FontSize="15"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" />
+
+                <Label Text="-  Recieve daily motivation."
+                    Grid.Row="4"
+                    FontSize="15"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" />
+
+                <Button x:Name="MenuButton" Grid.Row ="5" Text="Back to Main Menu" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnMenuClicked" />
+
+            </Grid>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

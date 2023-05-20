@@ -49,6 +49,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\task.jpg" />
+	  <None Remove="Resources\Images\tasklogo.jpg" />
+	  <None Remove="Resources\Images\taskmaster.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 	  <PackageReference Include="FontAwesome" Version="4.7.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />

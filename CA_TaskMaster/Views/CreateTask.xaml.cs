@@ -10,5 +10,10 @@ namespace CA_TaskMaster.Views
             InitializeComponent();
             BindingContext = viewModel;
         }
+
+        private async void OnMenuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MainPage());
+        }
     }
 }

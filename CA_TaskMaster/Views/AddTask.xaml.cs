@@ -32,5 +32,10 @@ namespace CA_TaskMaster.Views
             MyTask selectedTask = (MyTask)((Button)sender).BindingContext;
             await Navigation.PushAsync(new EditTaskPage(selectedTask, BindingContext as AddTaskViewModel));
         }
+
+        private async void OnMenuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MainPage());
+        }
     }
 }

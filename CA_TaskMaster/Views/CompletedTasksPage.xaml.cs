@@ -11,5 +11,10 @@ namespace CA_TaskMaster.Views
         {
             InitializeComponent();
         }
+
+        private async void OnMenuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }

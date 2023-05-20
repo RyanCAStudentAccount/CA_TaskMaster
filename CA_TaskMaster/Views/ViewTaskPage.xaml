@@ -2,20 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           x:Class="CA_TaskMaster.Views.ViewTaskPage"
-          BackgroundColor="LightGray">
+          BackgroundColor="Black">
     <ScrollView>
         <StackLayout Spacing="15" Padding="20">
-            <Label Text="Task Name:" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding TaskName}" FontSize="16" BackgroundColor="White" Padding="10"/>
 
-            <Label Text="Task Description:" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding TaskDescription}" FontSize="16" BackgroundColor="White" Padding="10"/>
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
 
-            <Label Text="Due Date:" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="16" BackgroundColor="White" Padding="10"/>
+                <Label Text="TaskMaster" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                       HorizontalOptions="Center"
+                       FontFamily="TimesNewRoman"/>
 
-            <Label Text="Priority:" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding TaskPriority}" FontSize="16" BackgroundColor="White" Padding="10"/>
+                <Label Text="The Task Management Solution" 
+                               TextColor="White" 
+                               FontAttributes="Italic"
+                               FontSize="14"
+                       FontFamily="TimesNewRoman"/>
+
+                <Image Aspect="AspectFill" Source="tasklogo.jpg"
+                                           WidthRequest="50" HeightRequest="50" Margin="5"/>
+
+
+            </VerticalStackLayout>
+
+            <Frame
+                CornerRadius="10"
+                Padding="10"
+                BackgroundColor="White"
+                HorizontalOptions="FillAndExpand">
+                <StackLayout>
+                    <Label Text="Task Name:" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="{Binding TaskName}" FontSize="16" BackgroundColor="White" Padding="10"/>
+
+                    <Label Text="Task Description:" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="{Binding TaskDescription}" FontSize="16" BackgroundColor="White" Padding="10"/>
+
+                    <Label Text="Due Date:" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="{Binding TaskDueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="16" BackgroundColor="White" Padding="10"/>
+
+                    <Label Text="Priority:" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="{Binding TaskPriority}" FontSize="16" BackgroundColor="White" Padding="10"/>
+                </StackLayout>
+            </Frame>
 
             <Button x:Name="UpdateTaskButton" Text="Back to Tasks" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnBackClicked" />
         </StackLayout>
