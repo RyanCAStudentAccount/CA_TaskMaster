@@ -5,10 +5,45 @@
              x:Name="EditTaskPageInstance"
              xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster"
              Title="Edit Task"
-             BackgroundColor="LightGray">
+             BackgroundColor="White">
 
     <ScrollView>
         <StackLayout Spacing="15" Padding="20">
+
+            <Frame
+                CornerRadius="10"
+                Padding="10"
+                BackgroundColor="Black"
+                HorizontalOptions="FillAndExpand">
+                <StackLayout>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                        <Label Text="TaskMaster" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                       HorizontalOptions="Center"
+                       FontFamily="TimesNewRoman"/>
+
+                        <Label Text="The Task Management Solution" 
+                               TextColor="White" 
+                               FontAttributes="Italic"
+                               FontSize="14"
+                       FontFamily="TimesNewRoman"/>
+
+                        <Image Aspect="AspectFill" Source="tasklogo.jpg"
+                                           WidthRequest="50" HeightRequest="50" Margin="5"/>
+
+
+                    </VerticalStackLayout>
+
+                    <Frame BackgroundColor="White" Padding="10" CornerRadius="10">
+                        <Label Text="Edit Task" TextColor="Black" HorizontalOptions="Center" 
+                       FontSize="20" FontAttributes="Bold" FontFamily="TimesNewRoman"/>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
             <Label Text="Task Name:" FontSize="18" FontAttributes="Bold" />
             <Entry x:Name="TaskNameEntry" Text="{Binding TaskName}" FontSize="16" Placeholder="Enter task name" BackgroundColor="White"/>
 

@@ -5,41 +5,70 @@
              Title="Daily Motivation"
              Background="Black"
              BackgroundColor="LightGray">
+    
 
     <ScrollView>
-        <Grid BackgroundColor="White" 
+        <StackLayout 
+            Spacing="20" 
+            Padding="20"
+            VerticalOptions="CenterAndExpand">
+
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                <Label Text="TaskMaster" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                       HorizontalOptions="Center"
+                       FontFamily="TimesNewRoman"/>
+
+                <Label Text="The Task Management Solution" 
+                               TextColor="White" 
+                               FontAttributes="Italic"
+                               FontSize="14"
+                       FontFamily="TimesNewRoman"/>
+
+                <Image Aspect="AspectFill" Source="tasklogo.jpg"
+                                           WidthRequest="50" HeightRequest="50" Margin="5"/>
+
+
+            </VerticalStackLayout>
+
+
+            <Grid BackgroundColor="White" 
               Margin="20"
               Padding="20" 
               RowSpacing="20"
               VerticalOptions="CenterAndExpand">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Label Text="Your Daily Motivation" 
-                   FontSize="14" 
+                <Label Text="Your Daily Motivation" 
+                   FontSize="25" 
                    FontAttributes="Bold"
                    TextColor="#ff7043"
                    HorizontalOptions="CenterAndExpand" 
                    VerticalOptions="CenterAndExpand" />
 
-            <Frame Grid.Row="1" 
+                <Frame Grid.Row="1" 
                    Padding="10" 
                    CornerRadius="10"
                    HorizontalOptions="FillAndExpand">
-                <Label x:Name="MotivationQuoteLabel"
+                    <Label x:Name="MotivationQuoteLabel"
                        FontAttributes="Italic"
-                       FontSize="12"
+                       FontSize="18"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        TextColor="Black" />
-            </Frame>
+                </Frame>
 
-            <Button x:Name="MenuButton" Text="Back to Main Menu" Grid.Row ="2" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnMenuClicked" />
-            
-        </Grid>
+                <Button x:Name="MenuButton" Text="Back to Main Menu" Grid.Row ="2" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnMenuClicked" />
+
+            </Grid>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

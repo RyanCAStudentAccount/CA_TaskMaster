@@ -11,12 +11,27 @@
             Padding="20"
             VerticalOptions="CenterAndExpand">
 
-            <Image
-                x:Name="LogoImage"
-                Source="logo.png"
-                Aspect="AspectFit"
-                HorizontalOptions="Center"
-                Margin="0,0,0,20" />
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                <Label Text="TaskMaster" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                       HorizontalOptions="Center"
+                       FontFamily="TimesNewRoman"/>
+
+                <Label Text="The Task Management Solution" 
+                               TextColor="White" 
+                               FontAttributes="Italic"
+                               FontSize="14"
+                       FontFamily="TimesNewRoman"/>
+                
+                <Image Aspect="AspectFill" Source="tasklogo.jpg"
+                                           WidthRequest="50" HeightRequest="50" Margin="5"/>
+
+
+            </VerticalStackLayout>
+            
 
             <Frame
                 CornerRadius="10"
@@ -24,6 +39,7 @@
                 BackgroundColor="White"
                 HorizontalOptions="FillAndExpand">
                 <StackLayout>
+
                     <Button 
                         x:Name="AddTaskBtn"
                         Text="Create New Task"

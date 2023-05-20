@@ -5,7 +5,7 @@
              xmlns:viewmodels="clr-namespace:CA_TaskMaster.ViewModels;assembly=CA_TaskMaster"
              xmlns:converters="clr-namespace:CA_TaskMaster.Converters;assembly=CA_TaskMaster"
              xmlns:system="clr-namespace:System;assembly=netstandard"
-             BackgroundColor="LightGray">
+             BackgroundColor="Black">
 
     <ContentPage.BindingContext>
         <viewmodels:AddTaskViewModel />
@@ -19,27 +19,69 @@
 
     <ScrollView>
         <StackLayout Spacing="15" Padding="20">
-            <Label Text="Task Name:" FontSize="18" FontAttributes="Bold" />
-            <Entry x:Name="TaskNameEntry" Text="{Binding NewTask.TaskName}" FontSize="16" Placeholder="Enter task name" BackgroundColor="White"/>
 
-            <Label Text="Task Description:" FontSize="18" FontAttributes="Bold" />
-            <Editor x:Name="TaskDescriptionEditor" Text="{Binding NewTask.TaskDescription, Mode=TwoWay}" Placeholder="Enter task description" BackgroundColor="White"/>
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
 
-            <Label Text="Due Date:" FontSize="18" FontAttributes="Bold" />
-            <DatePicker x:Name="TaskDueDatePicker" Date="{Binding NewTask.TaskDueDate, Mode=TwoWay}" MinimumDate="{x:Static system:DateTime.Today}" BackgroundColor="White"/>
+                <Label Text="TaskMaster" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                       HorizontalOptions="Center"
+                       FontFamily="TimesNewRoman"/>
 
-            <Label Text="Priority:" FontSize="18" FontAttributes="Bold" />
-            <Picker x:Name="TaskPriorityPicker" Title="Select Priority" SelectedItem="{Binding NewTask.TaskPriority, Mode=TwoWay}" BackgroundColor="White">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Low</x:String>
-                        <x:String>Medium</x:String>
-                        <x:String>High</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+                <Label Text="The Task Management Solution" 
+                               TextColor="White" 
+                               FontAttributes="Italic"
+                               FontSize="14"
+                       FontFamily="TimesNewRoman"/>
 
-            <Button x:Name="SaveTaskButton" Text="Save Task" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Command="{Binding AddTaskCommand}" />
+                <Image Aspect="AspectFill" Source="tasklogo.jpg"
+                                           WidthRequest="50" HeightRequest="50" Margin="5"/>
+
+
+            </VerticalStackLayout>
+
+            <Frame BackgroundColor="White" Padding="10" CornerRadius="10">
+                <Label Text="Create new Task" TextColor="Black" HorizontalOptions="Center" 
+                       FontSize="20" FontAttributes="Bold" FontFamily="TimesNewRoman"/>
+            </Frame>
+
+            <Frame
+                CornerRadius="10"
+                Padding="10"
+                BackgroundColor="White"
+                HorizontalOptions="FillAndExpand">
+                <StackLayout>
+
+                    <Label Text="Task Name:" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                    <Entry x:Name="TaskNameEntry" Text="{Binding NewTask.TaskName}" FontSize="16" Placeholder="Enter task name" BackgroundColor="White"/>
+
+                    <Label Text="Task Description:" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                    <Editor x:Name="TaskDescriptionEditor" Text="{Binding NewTask.TaskDescription, Mode=TwoWay}" Placeholder="Enter task description" BackgroundColor="White"/>
+
+                    <Label Text="Due Date:" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                    <DatePicker x:Name="TaskDueDatePicker" Date="{Binding NewTask.TaskDueDate, Mode=TwoWay}" MinimumDate="{x:Static system:DateTime.Today}" BackgroundColor="White"/>
+
+                    <Label Text="Priority:" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                    <Picker x:Name="TaskPriorityPicker" Title="Select Priority" SelectedItem="{Binding NewTask.TaskPriority, Mode=TwoWay}" TextColor="White" BackgroundColor="White">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Low</x:String>
+                                <x:String>Medium</x:String>
+                                <x:String>High</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    
+                </StackLayout>
+            </Frame>
+
+            <StackLayout BackgroundColor="Black" Padding="10">
+                <Button x:Name="SaveTaskButton" Text="Save Task"  FontSize="18" BackgroundColor="White" TextColor="#ff7043" BorderColor="#ff7043" BorderWidth="1" Command="{Binding AddTaskCommand}" />
+        </StackLayout>
+
+        <Button x:Name="MenuButton" Text="Back to Main Menu" Grid.Row ="4" BackgroundColor="#ff7043" TextColor="White" CornerRadius="5" Clicked="OnMenuClicked" />
+
         </StackLayout>
     </ScrollView>
 
