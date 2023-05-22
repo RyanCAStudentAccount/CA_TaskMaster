@@ -52,7 +52,7 @@ jobs:
 
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
 
   ## This is the second job, responsible for deploying the application to production.
   #deploy_to_production:
