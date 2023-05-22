@@ -48,7 +48,7 @@ jobs:
 
     # This step runs the project's tests.
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --framework net6.0-windows
 
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
     - name: Perform CodeQL Analysis
