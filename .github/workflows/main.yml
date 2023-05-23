@@ -17,7 +17,7 @@ jobs:
   # This job is responsible for building the project and running tests.
   build_and_test:
     # This specifies the type of machine the job will run on.
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps are the individual tasks within a job.
     steps:
@@ -64,7 +64,7 @@ jobs:
     # This job will only run if the 'build_and_test' job has completed successfully.
     needs: build_and_test
     # This job runs on the latest version of Windows.
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     ## This job will only run if the branch being pushed to is 'main'.
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
