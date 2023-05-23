@@ -71,9 +71,11 @@ jobs:
 
     - name: Run SonarCloud Analysis
       run: |
-        dotnet sonarscanner begin /k:"your_project_key" /o:"your_organization_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet sonarscanner begin /k:"actual_project_key" /o:"actual_organization_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
         dotnet build
         dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
 
 
 
