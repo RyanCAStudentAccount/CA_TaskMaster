@@ -57,13 +57,20 @@ jobs:
 
 
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-         languages: 'csharp'
+    #- name: Initialize CodeQL
+    #  uses: github/codeql-action/init@v2
+    #  with:
+    #     languages: 'csharp'
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+    #- name: Perform CodeQL Analysis
+    #  uses: github/codeql-action/analyze@v2
+      
+      
+    - name: Run SonarCloud
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
