@@ -1,6 +1,9 @@
 # name of CI/CD pipeline
 name: CI/CD Pipeline
 
+permissions:
+  security-events: write
+
 # Specifies when the pipeline should run. 
 # In this case, it's configured to run when code is pushed or a pull request is opened against the 'main' branch.
 on:
