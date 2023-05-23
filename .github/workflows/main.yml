@@ -74,5 +74,5 @@ jobs:
         dotnet-version: 6.0.x
 
     # Deployment steps.
-    #- name: Deploy to Production
-     # run: echo "Deploying to production..."
+    - name: Deploy to Production
+      run: echo "Deploying to production..."
