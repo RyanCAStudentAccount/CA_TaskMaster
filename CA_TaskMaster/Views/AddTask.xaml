@@ -68,7 +68,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" Text="{Binding TaskName}" FontSize="8" VerticalOptions="Center" FontAttributes="Italic"/>
+                            <Label Grid.Column="0" Text="{Binding TaskName}" FontSize="12" VerticalOptions="Center" FontAttributes="Italic"/>
                             <Button Grid.Column="3" BackgroundColor="#28a745" Margin="5" TextColor="White" Command="{Binding Path=BindingContext.MarkAsDoneCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
                             <Button Grid.Column="1" BackgroundColor="Wheat" Margin="5" TextColor="Black" Command="{Binding Path=BindingContext.ViewTaskCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
                             <Button Grid.Column="2" BackgroundColor="SandyBrown" Margin="5" TextColor="Black" Command="{Binding Path=BindingContext.EditTaskCommand, Source={x:Reference Name=AddTaskPage}}" CommandParameter="{Binding}" />
