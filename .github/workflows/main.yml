@@ -52,7 +52,7 @@ jobs:
 
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
          languages: 'csharp'
 
