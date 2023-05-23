@@ -51,8 +51,13 @@ jobs:
       run: dotnet test --no-build --verbosity normal --framework net6.0-windows
 
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
-    #- name: Perform CodeQL Analysis
-    #  uses: github/codeql-action/analyze@v2
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+         languages: 'csharp'
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
 
   # This is the second job, responsible for deploying the application to production.
   deploy_to_production:
