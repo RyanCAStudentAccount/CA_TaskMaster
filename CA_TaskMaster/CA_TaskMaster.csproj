@@ -94,4 +94,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadGenericExceptionInfoBarCA_TaskMasterHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
 </Project>
