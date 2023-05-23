@@ -12,7 +12,7 @@ on:
       - master
   pull_request:
     branches:
-      - master
+      - '*'
 
 # Jobs are the tasks the pipeline will run. 
 # We can have multiple jobs, and they can run in parallel or sequentially.
@@ -53,22 +53,59 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --framework net6.0-windows
 
+
+
+
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
-    #- name: Initialize CodeQL
-    #  uses: github/codeql-action/init@v2
-    #  with:
-    #     languages: 'csharp'
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+         languages: 'csharp'
 
-    #- name: Perform CodeQL Analysis
-    #  uses: github/codeql-action/analyze@v2
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
 
-  # This is the second job, responsible for deploying the application to production.
+
+
+
+  # This job is responsible for deploying the application to staging.
+  deploy_to_staging:
+  # This job will only run if the 'build_and_test' job has completed successfully.
+    needs: build_and_test
+    # This job will only run if the branch being pushed to is 'main'.
+    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    # This job runs on the latest version of Windows.
+    runs-on: windows-latest
+    steps:
+    # This step checks out the code on the machine.
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # This step sets up .NET on the machine.
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    # Deployment steps.
+    - name: Deploy to Azure Web App (Staging)
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'TaskMasterAppStaging'
+        slot-name: 'staging'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
+        package: './'
+        
+        
+        
+        
+  # This job is responsible for deploying the application to production.
   deploy_to_production:
     # This job will only run if the 'build_and_test' job has completed successfully.
     needs: build_and_test
     # This job runs on the latest version of Windows.
     runs-on: windows-latest
-    ## This job will only run if the branch being pushed to is 'main'.
+    # This job will only run if the branch being pushed to is 'main'.
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
     # This step checks out the code on the machine.
@@ -82,9 +119,6 @@ jobs:
         dotnet-version: 6.0.x
 
     # Deployment steps.
-    #- name: Deploy to Production
-    #  run: echo "Deploying to production..."
-      
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
