@@ -14,34 +14,67 @@ on:
       - '*'
 
 jobs:
-  codeql_analysis:
-    runs-on: windows-latest
+  analyze:
+    name: Analyze
+    runs-on: ${{ (matrix.language == 'csharp' && 'windows-latest') || 'ubuntu-latest' }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'csharp' ]
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
       with:
-        dotnet-version: 6.0.x
-
-    - name: Install MAUI workloads
+        languages: ${{ matrix.language }}
+ 
+    - name: Install .NET MAUI workload
       run: |
         dotnet workload install maui
         dotnet workload install maui-android
         dotnet workload install maui-ios
         dotnet workload install maccatalyst
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: 'csharp'
+    - name: Build Application
+      run: |
+        dotnet restore
+        dotnet build --no-restore
+
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    #- name: Install MAUI workloads
+     # run: |
+      #  dotnet workload install maui
+       # dotnet workload install maui-android
+        #dotnet workload install maui-ios
+        #dotnet workload install maccatalyst
+
+  #  - name: Initialize CodeQL
+  #    uses: github/codeql-action/init@v2
+  #    with:
+  #      languages: 'csharp'
+
+  #  - name: Perform CodeQL Analysis
+  #    uses: github/codeql-action/analyze@v2
+
   build_and_test:
-    needs: codeql_analysis
+    needs: analyze
     runs-on: windows-latest
     steps:
     - name: Checkout code
