@@ -9,7 +9,7 @@
 #dotnet workload install maccatalyst
 
 # Restore project dependencies
-dotnet restore
+dotnet restore --ignore-failed-sources
 
 # Build the project
 dotnet build --no-restore
