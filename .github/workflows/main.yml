@@ -81,66 +81,45 @@ jobs:
 
 
 
-  # This job is responsible for deploying the application to staging.
+ # This job is responsible for deploying the application to staging.
   deploy_to_staging:
-  # This job will only run if the 'build_and_test' job has completed successfully.
     needs: build_and_test
-    # This job will only run if the branch being pushed to is 'main'.
     if: github.ref != 'refs/heads/main' && github.event_name == 'push'
-    
-    # This job runs on the latest version of Windows.
     runs-on: windows-latest
     
     steps:
-    # This step checks out the code on the machine.
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # This step sets up .NET on the machine.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
 
-    # Deployment steps.
     - name: Deploy to Azure Web App (Staging)
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'TaskMasterService'
-        slot-name: 'staging'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
         package: './'
-        
-        
-        
-        
+
   # This job is responsible for deploying the application to production.
   deploy_to_production:
-    # This job will only run if the 'build_and_test' job has completed successfully.
     needs: build_and_test
-    
-    # This job runs on the latest version of Windows.
     runs-on: windows-latest
-    
-    # This job will only run if the branch being pushed to is 'main'.
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
-    # This step checks out the code on the machine.
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # This step sets up .NET on the machine.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
 
-    # Deployment steps.
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'TaskMasterApp'
-        slot-name: 'production'
+        app-name: 'TaskMasterApp_Production'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: './'
-
