@@ -4,8 +4,7 @@ name: CI/CD Pipeline
 permissions:
   security-events: write
 
-# Specifies when the pipeline should run. 
-# In this case, it's configured to run when code is pushed or a pull request is opened against the 'main' branch.
+# Specifies when the pipeline should run.
 on:
   push:
     branches:
@@ -14,26 +13,18 @@ on:
     branches:
       - '*'
 
-# Jobs are the tasks the pipeline will run. 
-# We can have multiple jobs, and they can run in parallel or sequentially.
 jobs:
-  # This job is responsible for building the project and running tests.
-  build_and_test:
-    # This specifies the type of machine the job will run on.
+  codeql_analysis:
     runs-on: windows-latest
-
-    # Steps are the individual tasks within a job.
     steps:
-    # This step checks out the repository's code onto the machine.
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # This step sets up the .NET environment on the machine.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-        
+
     - name: Install MAUI workloads
       run: |
         dotnet workload install maui
@@ -41,38 +32,46 @@ jobs:
         dotnet workload install maui-ios
         dotnet workload install maccatalyst
 
-    # This step restores any dependencies the project needs.
-    - name: Restore dependencies
-      run: dotnet restore
-
-    # This step builds the project, using the previously restored dependencies.
-    - name: Build
-      run: dotnet build --no-restore
-
-    # This step runs the project's tests.
-    - name: Test
-      run: dotnet test --no-build --verbosity normal --framework net6.0-windows
-
-
-    ### CODE REVIEW & SECURITY CHECKS  ###
-    # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-         languages: 'csharp'
+        languages: 'csharp'
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
-    
-    
 
-### STAGING  ###
- # This job is responsible for deploying the application to staging.
+  build_and_test:
+    needs: codeql_analysis
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Install MAUI workloads
+      run: |
+        dotnet workload install maui
+        dotnet workload install maui-android
+        dotnet workload install maui-ios
+        dotnet workload install maccatalyst
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --framework net6.0-windows
+
   deploy_to_staging:
     needs: build_and_test
     if: github.ref != 'refs/heads/main' && github.event_name == 'push'
     runs-on: windows-latest
-    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -89,15 +88,10 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
         package: './'
 
-
-
-
-  ### PRODUCTION  ###
-  # This job is responsible for deploying the application to production.
   deploy_to_production:
     needs: build_and_test
     runs-on: windows-latest
-    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
