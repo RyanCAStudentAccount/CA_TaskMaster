@@ -54,7 +54,6 @@ jobs:
       run: dotnet test --no-build --verbosity normal --framework net6.0-windows
 
 
-
     ### CODE REVIEW & SECURITY CHECKS  ###
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
     - name: Initialize CodeQL
@@ -65,8 +64,7 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
     
-  
-  
+    
 
 ### STAGING  ###
  # This job is responsible for deploying the application to staging.
