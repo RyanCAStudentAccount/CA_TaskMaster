@@ -60,9 +60,6 @@ jobs:
       uses: github/codeql-action/init@v2
       with:
          languages: 'csharp'
-         search-path: |
-                    .
-                    !**/maui/**
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
