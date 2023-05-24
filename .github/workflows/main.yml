@@ -57,10 +57,10 @@ jobs:
 
 
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
-    #- name: Initialize CodeQL
-    #  uses: github/codeql-action/init@v2
-    #  with:
-    #     languages: 'csharp'
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+         languages: 'csharp'
 
     #- name: Perform CodeQL Analysis
     #  uses: github/codeql-action/analyze@v2
@@ -69,9 +69,9 @@ jobs:
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner
 
-    - name: Run SonarCloud Analysis
-      run: |
-        dotnet tool install --global dotnet-sonarscanner
+    #- name: Run SonarCloud Analysis
+    #  run: |
+        #dotnet tool install --global dotnet-sonarscanner
         #dotnet sonarscanner begin /k:"actual_project_key" /o:"actual_organization_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
         #dotnet build
         #dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
