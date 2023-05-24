@@ -55,7 +55,7 @@ jobs:
 
 
 
-
+    ### CODE REVIEW & SECURITY CHECKS  ###
     # This step performs a CodeQL analysis on the code to identify potential vulnerabilities.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
@@ -80,7 +80,7 @@ jobs:
 
 
 
-
+### STAGING  ###
  # This job is responsible for deploying the application to staging.
   deploy_to_staging:
     needs: build_and_test
@@ -103,6 +103,10 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
         package: './'
 
+
+
+
+  ### PRODUCTION  ###
   # This job is responsible for deploying the application to production.
   deploy_to_production:
     needs: build_and_test
