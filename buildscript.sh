@@ -2,11 +2,9 @@
 
 # Set up environment variables
 
-# Install MAUI workloads
-#dotnet workload install maui
-#dotnet workload install maui-android
-#dotnet workload install maui-ios
-#dotnet workload install maccatalyst
+# Install .NET SDK workloads
+dotnet workload install maui
+dotnet workload install android
 
 # Restore project dependencies
 dotnet restore --ignore-failed-sources
