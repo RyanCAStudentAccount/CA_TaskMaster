@@ -144,7 +144,7 @@ jobs:
     needs: build_and_test
     # The job only runs if the push is to the 'main' branch and the event triggering the pipeline is 'push'.
     runs-on: windows-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
     
     steps:
     # Step 1: Checkout the repository code.
