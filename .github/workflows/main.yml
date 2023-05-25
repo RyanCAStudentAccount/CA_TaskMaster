@@ -1,10 +1,14 @@
-# name of CI/CD pipeline
+# Name of the CI/CD pipeline
 name: CI/CD Pipeline
 
+
+# Permissions allow the pipeline to write security events.
 permissions:
   security-events: write
+  
 
-# Specifies when the pipeline should run.
+# This specifies when the pipeline should be triggered.
+# It's set to run whenever there's a push to the master branch or a pull request to any branch.
 on:
   push:
     branches:
@@ -13,130 +17,151 @@ on:
     branches:
       - '*'
 
+
 jobs:
+##################### JOB 1 ######################
+  # "Analyze". This job runs CodeQL analysis.
   analyze:
     name: Analyze
-    runs-on: ${{ (matrix.language == 'csharp' && 'windows-latest') || 'ubuntu-latest' }}
+    # This job runs on windows and C#.
+    runs-on: ${{ (matrix.language == 'csharp' && 'windows-latest') }}
+    
     permissions:
       actions: read
       contents: read
       security-events: write
-
+      
     strategy:
       fail-fast: false
+      # Sets the programming language for CodeQL analysis.
       matrix:
         language: [ 'csharp' ]
-
+        
     steps:
+    # Step 1: Checkout the repository code
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    # Initializes the CodeQL tools for scanning.
+      
+    # Step 2: Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
- 
+        
+    # Step 3: Install .NET MAUI workload required for building the application.
     - name: Install .NET MAUI workload
       run: |
         dotnet workload install maui
         dotnet workload install maui-android
         dotnet workload install maui-ios
         dotnet workload install maccatalyst
-
+        
+    # Step 4: Build the application
     - name: Build Application
       run: |
         dotnet restore
         dotnet build --no-restore
-
-
+        
+    # Step 5: Perform CodeQL Analysis on the codebase.
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
-    #- name: Install MAUI workloads
-     # run: |
-      #  dotnet workload install maui
-       # dotnet workload install maui-android
-        #dotnet workload install maui-ios
-        #dotnet workload install maccatalyst
-
-  #  - name: Initialize CodeQL
-  #    uses: github/codeql-action/init@v2
-  #    with:
-  #      languages: 'csharp'
-
-  #  - name: Perform CodeQL Analysis
-  #    uses: github/codeql-action/analyze@v2
-
+        
+        
+  ##################### JOB 2 ######################  
+  # "Build and Test". This job builds the code and runs tests. It depends on the "Analyze" job.
   build_and_test:
     needs: analyze
     runs-on: windows-latest
     steps:
+    # Step 1: Checkout the repository code.
     - name: Checkout code
       uses: actions/checkout@v2
-
+      
+    # Step 2: Setup the .NET environment.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
+        
+    # Step 3: Install the .NET MAUI workloads.
     - name: Install MAUI workloads
       run: |
         dotnet workload install maui
         dotnet workload install maui-android
         dotnet workload install maui-ios
         dotnet workload install maccatalyst
-
+        
+    # Step 4: Restore any dependencies.
     - name: Restore dependencies
       run: dotnet restore
-
+      
+    # Step 5: Build the project.
     - name: Build
       run: dotnet build --no-restore
-
+      
+    # Step 6: Test the application.
     - name: Test
       run: dotnet test --no-build --verbosity normal --framework net6.0-windows
-
+      
+      
+      
+  ##################### JOB 3 ######################
+  # "Deploy to Staging". This job deploys the code to the staging environment. It depends on the "Build and Test" job.
   deploy_to_staging:
     needs: build_and_test
+    # The job only runs if the push is not to the 'main' branch and the event triggering the pipeline is 'push'.
     if: github.ref != 'refs/heads/main' && github.event_name == 'push'
     runs-on: windows-latest
+    
     steps:
+    # Step 1: Checkout the repository code.
     - name: Checkout code
       uses: actions/checkout@v2
-
+      
+    # Step 2: Setup the .NET environment.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
+        
+    # Step 3: Deploy to the Azure Web App (Staging).
     - name: Deploy to Azure Web App (Staging)
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'TaskMasterService'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
         package: './'
-
+        
+        
+        
+  ##################### JOB 4 ######################
+  #"Deploy to Production". This job deploys the code to the production environment. It depends on the "Build and Test" job.
   deploy_to_production:
     needs: build_and_test
+    # The job only runs if the push is to the 'main' branch and the event triggering the pipeline is 'push'.
     runs-on: windows-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
     steps:
+    # Step 1: Checkout the repository code.
     - name: Checkout code
       uses: actions/checkout@v2
-
+      
+    # Step 2: Setup the .NET environment.
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
+        
+    # Step 3: Deploy to the Azure Web App (Production).
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'TaskMasterApp'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: './'
+
