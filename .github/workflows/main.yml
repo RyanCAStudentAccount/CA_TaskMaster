@@ -19,6 +19,7 @@ on:
 
 
 jobs:
+
 ##################### JOB 1 ######################
   # "Analyze". This job runs CodeQL analysis.
   analyze:
